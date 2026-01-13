@@ -1,3 +1,4 @@
+
 SQL> create user d2 identified by sit;
 
 User created.
@@ -10,4 +11,18 @@ SQL> alter user d2 identified by sneha007;
 
 User altered.
 
-SQL>
+SQL> connect
+Enter user-name: d2
+Enter password:
+ERROR:
+ORA-03113: end-of-file on communication channel
+Process ID: 0
+Session ID: 149 Serial number: 7
+
+
+Connected.
+SQL> connect
+Enter user-name: d2@d2
+Enter password:
+Connected.
+SQL> exit
