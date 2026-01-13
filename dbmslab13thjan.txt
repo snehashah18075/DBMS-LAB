@@ -1,0 +1,13 @@
+SQL> create user d2 identified by sit;
+
+User created.
+
+SQL> grant connect, resource to d2;
+
+Grant succeeded.
+
+SQL> alter user d2 identified by sneha007;
+
+User altered.
+
+SQL>
