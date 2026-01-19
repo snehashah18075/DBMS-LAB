@@ -1,0 +1,27 @@
+1. create table
+create table st.info(prn int, name varchar2(20), m1 number, m2 number, m3 number);
+
+2. to see the attributes in the table or the table structure:
+desc st_info 
+
+3. Insert data into the table:
+insert into st_info values(101, 'xyz', 65, 75, 85);
+
+select * from st_info;
+
+4. add column to the table using alter:
+alter table st_info add total number;
+alter table st_info add perc number;
+
+5. insert values after creation of columns:
+insert into st_info values(101,'abc',5,7,8);    #error: not enough values
+insert into st_info values(101,'abc',5,7,8,null,null);
+insert into st_info values(101,'brad',55,73,84,null,null);
+insert into st_info values(101,'jack',58,71,28,null,null);
+insert into st_info values(101,'olive',59,78,88,null,null);
+insert into st_info values(101,'george',56,73,84,null,null);
+insert into st_info values(101,'smith',57,74,89,null,null);
+insert into st_info values(101,'derek',57,71,82,null,null);
+insert into st_info values(101,'steve',54,73,87,null,null);
+insert into st_info values(101,'liam',51,75,87,null,null);
+insert into st_info values(101,'william',52,77,83,null,null);
