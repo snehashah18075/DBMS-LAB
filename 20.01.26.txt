@@ -1,0 +1,118 @@
+20.01.26
+primary key - unique, not null, cannot be modified
+when primary key is referenced in another table it is a foreign key. 
+table with a primary key - strong entity
+table with a foreign key - weak entity
+Practical 2:
+
+CREATE TABLE UNIVERSITY(
+uni_id INT PRIMARY KEY,
+name VARCHAR(100) NOT NULL
+);
+INSERT INTO UNIVERSITY(uni_id,name) VALUES (1,'Example University');
+INSERT INTO UNIVERSITY(uni_id,name) VALUES (2,'Another University');
+INSERT INTO UNIVERSITY(uni_id,name) VALUES (3,'Third University');
+INSERT INTO UNIVERSITY(uni_id,name) VALUES (4,'Fourth University');
+INSERT INTO UNIVERSITY(uni_id,name) VALUES (5,'Fifth University');
+INSERT INTO UNIVERSITY(uni_id,name) VALUES (6,'Sixth University');
+INSERT INTO UNIVERSITY(uni_id,name) VALUES (7,'Seventh University');
+
+CREATE TABLE DEPARTMENT(
+dep_id INT PRIMARY KEY,
+name VARCHAR(50) NOT NULL,
+building VARCHAR(50),
+budget DECIMAL(12,2),
+uni_id INT FOREIGN KEY (uni_id) REFERENCES UNIVERSITY(uni_id)
+);
+INSERT INTO DEPARTMENT(dept_id, name, building, budget, uni_id) VALUES (1,'Computer Science','Taylor',100000,1);
+INSERT INTO DEPARTMENT(dept_id, name, building, budget, uni_id) VALUES (2,'Mathematics','Watson',100000,1);
+INSERT INTO DEPARTMENT(dept_id, name, building, budget, uni_id) VALUES (1,'Finance','',100000,1);
+INSERT INTO DEPARTMENT(dept_id, name, building, budget, uni_id) VALUES (1,'Computer Science','taylor',100000,1);
+
+CREATE TABLE INSTRUCTOR(
+instructor_id NUMBER PRIMARY KEY,
+name VARCHAR2(50) NOT NULL,
+dept_id NUMBER,
+is_hod CHAR(1) DEFAULT 'N' CHECK (is_hod in ('Y','N')),
+salary NUMBER(10,2),
+CONSTRAINT fk_instructor_dept
+FOREIGN KEY(dept_id)
+REFERENCES DEPARTMENT(dept_id)
+);
+
+INSERT INTO INSTRUCTOR(instructor_id, name, dept_id,is_hod,salary) VALUES(1,'John Doe',1,'Y',80000);
+INSERT INTO INSTRUCTOR(instructor_id, name, dept_id,is_hod,salary) VALUES(2,'Jane Smith',1,'N',75000);
+
+CREATE TABLE COURSE(
+course_id VARCHAR(8) PRIMARY KEY,
+title VARCHAR(100) NOT NULL,
+dept_id INT,
+credits INT,
+FOREIGN KEY(dept_id) REFERENCES DEPARTMENT(dept_id)
+);
+INSERT INTO COURSE(course_id,title, dept_id,credits) VALUES ('BIO-101','Intro to Biology',4,4);
+
+CREATE TABLE SECTION (
+section_id INT PRIMARY KEY,
+course_id VARCHAR(8),
+sec_id INT,
+semester VARCHAR(6),
+year INT,
+building VARCHAR(50),
+room_number VARCHAR(10),
+time_slot_id VARCHAR(4),
+FOREIGN KEY(course_id) REFERENCES COURSE(course_id)
+);
+INSERT INTO SECTION (section_id,course_id, semester,year,building,room_number,time_slot) VALUES (1,'CS-101','Fall',2025,'Chanakya','102','2-3pm');
+
+CREATE TABLE TEACHES(
+intructor_id INT,
+section_id INT,
+PRIMARY KEY(instructor_id, section_id),
+FOREIGN KEY(instructor_id) REFERENCES INSTRUCTOR(instructor_id),
+FOREIGN KEY(section_id) REFERENCES SECTION(section_id)
+);
+
+INSERT INTO TEACHES(instructor_id,section_id) VALUES (1,1);
+INSERT INTO TEACHES(instructor_id,section_id) VALUES (2,2);
+INSERT INTO TEACHES(instructor_id,section_id) VALUES (3,3);
+
+CREATE TABLE STUDENT(
+student_id INT PRIMARY KEY,
+name VARCHAR(50) NOT NULL,
+tot_cred INT
+);
+INSERT INTO STUDENT(student_id, name, tot_cred) VALUES(1,'Mike Johnson',60);
+INSERT INTO STUDENT(student_id, name, tot_cred) VALUES(2,'Emily Lee',30);
+INSERT INTO STUDENT(student_id, name, tot_cred) VALUES(3,'David Wilson',90);
+
+CREATE TABLE TAKES(
+student_id INT,
+section_id INT,
+grade VARCHAR(2),
+PRIMARY KEY(student_id,section_id),
+FOREIGN KEY(student_id) REFERENCES STUDENT(student_id),
+FOREIGN KEY(section_id) REFERENCES SECTION(section_id),
+);
+
+INSERT INTO TAKES(student_id,section_id, grade) VALUES (1,1,'A');
+INSERT INTO TAKES(student_id,section_id, grade) VALUES (1,3,'B');
+INSERT INTO TAKES(student_id,section_id, grade) VALUES (1,3,'A');
+
+CREATE TABLE TIME_SLOT(
+time_slot_id VARCHAR2(4) PRIMARY KEY,
+day CHAR(1),
+start_time DATE,
+end_time DATE
+);
+
+INSERT INTO TIME_SLOT(time_slot_id, day,start_time,end_time) VALUES('A','M,TO DATE('09:00','HH24:MI'),TO DATE('10:30',HH24:MI'));
+
+CREATE TABLE CLASSROOM(
+building VARCHAR(50),
+room_number VARCHAR(10),
+capacity INT,
+PRIMARY KEY (building,room_number)
+);
+
+INSERT INTO CLASSROOM(building
