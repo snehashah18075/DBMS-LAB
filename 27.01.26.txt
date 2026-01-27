@@ -1,0 +1,264 @@
+27.01.26
+
+
+command to see all tables in the database 
+select * from tab;
+
+command to see structure of the table
+desc table_name
+
+NUMBER(12,2) means total 12 numbers out of which 2 are decimal.
+
+alter command is used to change the data type of a field not the name. for that rename command is used.
+
+
+
+CREATE TABLE UNIVERSITY(
+university_id INT PRIMARY KEY,
+name VARCHAR(100) NOT NULL
+);
+INSERT INTO UNIVERSITY (university_id, name) VALUES(1,'Example University');
+INSERT INTO UNIVERSITY (university_id, name) VALUES(2,'Another University');
+INSERT INTO UNIVERSITY (university_id, name) VALUES(3,'Third University');
+INSERT INTO UNIVERSITY (university_id, name) VALUES(4,'Fourth University');
+INSERT INTO UNIVERSITY (university_id, name) VALUES(5,'Fifth University');
+INSERT INTO UNIVERSITY (university_id, name) VALUES(6,'Sixth University');
+INSERT INTO UNIVERSITY (university_id, name) VALUES(7,'Seventh University');
+INSERT INTO UNIVERSITY (university_id, name) VALUES(8,'Eigth University');
+INSERT INTO UNIVERSITY (university_id, name) VALUES(9,'Ninth University');
+INSERT INTO UNIVERSITY (university_id, name) VALUES(10,'Tenth University');
+
+CREATE TABLE DEPARTMENT(
+dept_id INT PRIMARY KEY,
+name VARCHAR(50) NOT NULL,
+building VARCHAR(50),
+budget DECIMAL(12, 2),
+university_id INT,
+FOREIGN KEY(university_id) REFERENCES UNIVERSITY(university_id)
+);
+
+INSERT INTO DEPARTMENT(dept_id, name, building, budget, university_id) VALUES
+(1,'Computer Science','Taylor','100000',1);
+INSERT INTO DEPARTMENT(dept_id, name, building, budget, university_id) VALUES
+(2,'Mathematics','Watson','90000',1);
+INSERT INTO DEPARTMENT(dept_id, name, building, budget, university_id) VALUES
+(3,'Physics','Newton','95000',1);
+INSERT INTO DEPARTMENT(dept_id, name, building, budget, university_id) VALUES
+(4,'Chemistry','Gemma','95000',1);
+INSERT INTO DEPARTMENT(dept_id, name, building, budget, university_id) VALUES
+(5,'Python','Emma','95000',1);
+INSERT INTO DEPARTMENT(dept_id, name, building, budget, university_id) VALUES
+(6,'Java','Riya','95000',1);
+INSERT INTO DEPARTMENT(dept_id, name, building, budget, university_id) VALUES
+(7,'Aiml','N','95000',1);
+INSERT INTO DEPARTMENT(dept_id, name, building, budget, university_id) VALUES
+(8,'Data science','Newton','95000',1);
+INSERT INTO DEPARTMENT(dept_id, name, building, budget, university_id) VALUES
+(9,'Robotics','Newton','95000',1);
+INSERT INTO DEPARTMENT(dept_id, name, building, budget, university_id) VALUES
+(10,'Dsa','Newton','95000',1);
+
+
+
+
+CREATE TABLE INSTRUCTOR(
+instructor_id NUMBER PRIMARY KEY,
+name VARCHAR(50) NOT NULL,
+dept_id NUMBER,
+is_hod CHAR(1) DEFAULT 'N' CHECK (is_hod IN ('Y','N')),
+salary NUMBER(10,2),
+CONSTRAINT fk_instructor_dept
+FOREIGN KEY (dept_id)
+REFERENCES DEPARTMENT(dept_id)
+);
+INSERT INTO INSTRUCTOR(instructor_id, name, dept_id, is_hod, salary)
+VALUES(1,'John Doe',1,'Y',80000);
+INSERT INTO INSTRUCTOR(instructor_id, name, dept_id, is_hod, salary)
+VALUES(2,'Jane Smith',1,'N',75000);
+INSERT INTO INSTRUCTOR(instructor_id, name, dept_id, is_hod, salary)
+VALUES(3,'Jake cavill',1,'N',75000);
+INSERT INTO INSTRUCTOR(instructor_id, name, dept_id, is_hod, salary)
+VALUES(4,'Johnny depp',1,'N',75000);
+INSERT INTO INSTRUCTOR(instructor_id, name, dept_id, is_hod, salary)
+VALUES(5,'Brad pitt',1,'N',75000);
+INSERT INTO INSTRUCTOR(instructor_id, name, dept_id, is_hod, salary)
+VALUES(6,'Tom cruise',1,'N',75000);
+INSERT INTO INSTRUCTOR(instructor_id, name, dept_id, is_hod, salary)
+VALUES(7,'Henry Cavill',1,'N',75000);
+INSERT INTO INSTRUCTOR(instructor_id, name, dept_id, is_hod, salary)
+VALUES(8,'Louis partidge',1,'N',75000);
+INSERT INTO INSTRUCTOR(instructor_id, name, dept_id, is_hod, salary)
+VALUES(9,'Tom holland',1,'N',75000);
+INSERT INTO INSTRUCTOR(instructor_id, name, dept_id, is_hod, salary)
+VALUES(10,'Andrew Garfield',1,'N',75000);
+
+
+
+CREATE TABLE COURSE(
+course_id VARCHAR(20) PRIMARY KEY,
+title VARCHAR(100) NOT NULL,
+dept_id INT,
+credits INT,
+FOREIGN KEY(dept_id) REFERENCES DEPARTMENT(dept_id)
+);
+
+INSERT INTO COURSE(course_id, title, dept_id, credits)VALUES
+('BIO-101','Introduction to biology', 4,4);
+INSERT INTO COURSE(course_id, title, dept_id, credits)VALUES
+('PHY-102','Introduction to physics', 4,2);
+INSERT INTO COURSE(course_id, title, dept_id, credits)VALUES
+('CHEM-103','Introduction to chemistry', 4,6);
+INSERT INTO COURSE(course_id, title, dept_id, credits)VALUES
+('Java-104','Introduction to java', 4,5);
+INSERT INTO COURSE(course_id, title, dept_id, credits)VALUES
+('Phython-105','Introduction to python', 4,3);
+INSERT INTO COURSE(course_id, title, dept_id, credits)VALUES
+('Dsa-106','Introduction to dsa', 4,9);
+INSERT INTO COURSE(course_id, title, dept_id, credits)VALUES
+('Daa-107','Introduction to daa', 4,7);
+INSERT INTO COURSE(course_id, title, dept_id, credits)VALUES
+('Robotics-108','Introduction to robotics', 4,8);
+INSERT INTO COURSE(course_id, title, dept_id, credits)VALUES
+('Maths-109','Introduction to maths', 4,2);
+INSERT INTO COURSE(course_id, title, dept_id, credits)VALUES
+('Comp sci-1010','Introduction to comp sci', 4,1);
+
+CREATE TABLE SECTION(
+section_id INT PRIMARY KEY,
+course_id VARCHAR(20),
+sec_id INT,
+semester VARCHAR(6),
+year int,
+building VARCHAR(50),
+room_number VARCHAR(10),
+time_slot_id VARCHAR(4),
+FOREIGN KEY(course_id)references COURSE(course_id));
+
+INSERT INTO SECTION(section_id, course_id, sec_id, semester,year,building,room_number,time_slot_id)VALUES(1,'BIO-101',1,'fall',2023,'taylor','3128','a');
+INSERT INTO SECTION(section_id, course_id, sec_id, semester,year,building,room_number,time_slot_id)VALUES(2,'PHY-102',1,'fall',2024,'taylor','3328','b');
+INSERT INTO SECTION(section_id, course_id, sec_id, semester,year,building,room_number,time_slot_id)VALUES(3,'CHEM-103',1,'fall',2023,'taylor','3128','c');
+INSERT INTO SECTION(section_id, course_id, sec_id, semester,year,building,room_number,time_slot_id)VALUES(4,'Java-104',1,'fall',2024,'taylor','3328','d');
+INSERT INTO SECTION(section_id, course_id, sec_id, semester,year,building,room_number,time_slot_id)VALUES(5,'Phython-105',1,'fall',2023,'taylor','3128','a');
+INSERT INTO SECTION(section_id, course_id, sec_id, semester,year,building,room_number,time_slot_id)VALUES(6,'Dsa-106',1,'fall',2024,'taylor','3328','b');
+INSERT INTO SECTION(section_id, course_id, sec_id, semester,year,building,room_number,time_slot_id)VALUES(7,'Daa-107',1,'fall',2023,'taylor','3128','c');
+INSERT INTO SECTION(section_id, course_id, sec_id, semester,year,building,room_number,time_slot_id)VALUES(8,'Robotics-108',1,'fall',2024,'taylor','3328','d');
+INSERT INTO SECTION(section_id, course_id, sec_id, semester,year,building,room_number,time_slot_id)VALUES(9,'Maths-109',1,'fall',2023,'taylor','3128','a');
+INSERT INTO SECTION(section_id, course_id, sec_id, semester,year,building,room_number,time_slot_id)VALUES(10,'Comp sci-1010',1,'fall',2024,'taylor','3328','b');
+
+
+CREATE TABLE TEACHES(
+ins_id int,
+section_id int,
+PRIMARY KEY(ins_id, section_id),
+FOREIGN KEY(ins_id)references INSTRUCTOR(ins_id),
+FOREIGN KEY(section_id)references section(section_id));
+
+INSERT INTO TEACHES (ins_id,section_id) VALUES(1,1);
+INSERT INTO TEACHES (ins_id,section_id) VALUES(2,2);
+INSERT INTO TEACHES (ins_id,section_id) VALUES(3,3);
+INSERT INTO TEACHES (ins_id,section_id) VALUES(4,4);
+INSERT INTO TEACHES (ins_id,section_id) VALUES(1,1);
+INSERT INTO TEACHES (ins_id,section_id) VALUES(2,2);
+INSERT INTO TEACHES (ins_id,section_id) VALUES(3,3);
+INSERT INTO TEACHES (ins_id,section_id) VALUES(4,4);
+INSERT INTO TEACHES (ins_id,section_id) VALUES(1,1);
+INSERT INTO TEACHES (ins_id,section_id) VALUES(2,2);
+
+
+CREATE TABLE STUDENT(
+stud_id int primary key,
+name VARCHAR(50) not null,
+tot_cred int
+);
+
+INSERT INTO STUDENT(stud_id, name, tot_cred) VALUES(1,'mike',60);
+INSERT INTO STUDENT(stud_id, name, tot_cred) VALUES(3,'micheal',80);
+INSERT INTO STUDENT(stud_id, name, tot_cred) VALUES(4,'milky',40);
+INSERT INTO STUDENT(stud_id, name, tot_cred) VALUES(1,'jake',60);
+INSERT INTO STUDENT(stud_id, name, tot_cred) VALUES(3,'john',80);
+INSERT INTO STUDENT(stud_id, name, tot_cred) VALUES(4,'johnny',40);
+INSERT INTO STUDENT(stud_id, name, tot_cred) VALUES(1,'tom',60);
+INSERT INTO STUDENT(stud_id, name, tot_cred) VALUES(3,'kate',80);
+INSERT INTO STUDENT(stud_id, name, tot_cred) VALUES(4,'joe',40);
+INSERT INTO STUDENT(stud_id, name, tot_cred) VALUES(1,'ross',60);
+
+
+CREATE TABLE TAKES(
+student_id INT,
+section_id INT,
+grade VARCHAR(2),
+PRIMARY KEY(student_id, section_id),
+FOREIGN KEY(student_id) REFERENCES STUDENT(student_id),
+FOREIGN KEY(section_id) REFERENCES SECTION(section_id),
+);
+
+INSERT INTO TAKES(student_id,section_id,grade)VALUES(1,1,'A');
+INSERT INTO TAKES(student_id,section_id,grade)VALUES(3,3,'B');
+INSERT INTO TAKES(student_id,section_id,grade)VALUES(3,4,'A');
+INSERT INTO TAKES(student_id,section_id,grade)VALUES(4,4,'B');
+INSERT INTO TAKES(student_id,section_id,grade)VALUES(3,1,'A');
+INSERT INTO TAKES(student_id,section_id,grade)VALUES(3,4,'B');
+INSERT INTO TAKES(student_id,section_id,grade)VALUES(4,1,'A');
+INSERT INTO TAKES(student_id,section_id,grade)VALUES(1,4,'B');
+INSERT INTO TAKES(student_id,section_id,grade)VALUES(1,3,'A');
+INSERT INTO TAKES(student_id,section_id,grade)VALUES(4,4,'A');
+
+CREATE TABLE TIME_SLOT(
+time_slot_id VARCHAR(4) PRIMARY KEY,
+day CHAR(1),
+start_time DATE,
+end_time DATE
+);
+
+INSERT INTO TIME SLOT (time_slot_id, day, start_time, end_time) VALUES ('F','M',TO_DATE('14:00','HH24:MI'),TO_DATE('15:30','HH24:MI'));
+INSERT INTO TIME SLOT (time_slot_id, day, start_time, end_time) VALUES ('E','F',TO_DATE('11:00','HH24:MI'),TO_DATE('12:30','HH24:MI'));
+INSERT INTO TIME SLOT (time_slot_id, day, start_time, end_time) VALUES ('F','M',TO_DATE('14:00','HH24:MI'),TO_DATE('15:30','HH24:MI'));
+INSERT INTO TIME SLOT (time_slot_id, day, start_time, end_time) VALUES ('E','F',TO_DATE('11:00','HH24:MI'),TO_DATE('14:30','HH24:MI'));
+INSERT INTO TIME SLOT (time_slot_id, day, start_time, end_time) VALUES ('F','M',TO_DATE('14:00','HH24:MI'),TO_DATE('16:30','HH24:MI'));
+INSERT INTO TIME SLOT (time_slot_id, day, start_time, end_time) VALUES ('E','F',TO_DATE('11:00','HH24:MI'),TO_DATE('18:30','HH24:MI'));
+INSERT INTO TIME SLOT (time_slot_id, day, start_time, end_time) VALUES ('F','M',TO_DATE('14:00','HH24:MI'),TO_DATE('13:30','HH24:MI'));
+INSERT INTO TIME SLOT (time_slot_id, day, start_time, end_time) VALUES ('E','F',TO_DATE('11:00','HH24:MI'),TO_DATE('12:30','HH24:MI'));
+INSERT INTO TIME SLOT (time_slot_id, day, start_time, end_time) VALUES ('F','M',TO_DATE('14:00','HH24:MI'),TO_DATE('11:30','HH24:MI'));
+INSERT INTO TIME SLOT (time_slot_id, day, start_time, end_time) VALUES ('E','F',TO_DATE('11:00','HH24:MI'),TO_DATE('15:30','HH24:MI'));
+
+CREATE TABLE CLASSROOM(
+building VARCHAR(50),
+room_number VARCHAR(10),
+capacity INT,
+PRIMARY KEY(building, room_number)
+);
+
+INSERT INTO CLASSROOM(building, room_number, capacity) VALUES ('Taylor','3128',50);
+INSERT INTO CLASSROOM(building, room_number, capacity) VALUES ('Taylor','3114',40);
+INSERT INTO CLASSROOM(building, room_number, capacity) VALUES ('Watson','2230',60);
+INSERT INTO CLASSROOM(building, room_number, capacity) VALUES ('Taylor','3125',50);
+INSERT INTO CLASSROOM(building, room_number, capacity) VALUES ('Taylor','3167',40);
+INSERT INTO CLASSROOM(building, room_number, capacity) VALUES ('Watson','2223',60);
+INSERT INTO CLASSROOM(building, room_number, capacity) VALUES ('Taylor','3189',50);
+INSERT INTO CLASSROOM(building, room_number, capacity) VALUES ('Taylor','3157',40);
+INSERT INTO CLASSROOM(building, room_number, capacity) VALUES ('Watson','2289',60);
+INSERT INTO CLASSROOM(building, room_number, capacity) VALUES ('Taylor','3178',50);
+
+
+Practical 2 questions: 
+i. alter table department modify name varchar2(25);
+   desc department;
+ii. alter table department modify building varchar2(25);
+   desc department;
+
+iv. desc instructor;
+    desc department;
+    select * from instructor;
+    select * from department;
+    update instructor set salary = salary *  1.1 where dept_id = (select dept_id from department where name = 'Computer Science');
+
+vii. update instructor set salary = salary * 1.05 where salary < 70000;
+
+viii. create a new course "CS-001" titled "Weekly Seminar", with 1 credit:
+      select * from course;
+      select * from department;
+      insert into course values ('CS-001','Weekly Seminar',5,1);
+
+
+ix. create a section of this course in Fall 2017, with sec_id of 1 and with the location not yet specified:
+insert into section values(11, 'CS-001', 1, 'fall','2017','taylor','NA','a');
