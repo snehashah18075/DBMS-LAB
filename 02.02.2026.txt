@@ -1,0 +1,33 @@
+02.02.2026
+// truncate command is used to delete data from the table
+command to remove sequence -- drop sequence emp_sq;
+
+select * from tab
+desc st_info;
+select max(prn) from st_info;
+
+// to create sequence : 
+create sequence st_info start with 1011 increment by 1;
+insert into st_info values (st.sq.nextval, 'xa1011',
+
+create sequence emp_sq start with 1 increment by 1;
+create table emp (emp_id int primary key, name varchar2(20));
+
+insert into emp values (emp_sq.nextval, 'john',8737939212);
+insert into emp values (emp_sq.nextval, 'mia',9246739290);
+insert into emp values (emp_sq.nextval, 'adam',9204050210);
+insert into emp values (emp_sq.nextval, 'millie',2039412425);
+insert into emp values (emp_sq.nextval, 'arianna',8749301939);
+insert into emp values (emp_sq.nextval, 'dan',2847320193);
+insert into emp values (emp_sq.nextval, 'blair',9383201928);
+insert into emp values (emp_sq.nextval, 'sam',8347382901);
+insert into emp values (emp_sq.nextval, 'nate',9274301011);
+insert into emp values (emp_sq.nextval, 'vianna',2847010192);
+
+desc emp;
+// to add field to emp:
+alter table emp add mobile number;
+insert into emp (emp_id, name, mobile) values (emp_sq.nextval, 'abc',9876543210);
+select * from emp;
+
+truncate table emp;
