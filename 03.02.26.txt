@@ -1,0 +1,36 @@
+03.02.26
+
+alter table emp add PINCODE int not null;
+\\ this will result in an error as putting a constraint requires an empty table 
+
+truncate table emp;
+drop sequence emp_sq; 
+\\ now alter table, create sequence and insert values.
+-----------------------
+
+practical 3:
+ 
+join in tables:
+types of join-
+1. inner join  2. left join  3. right join 
+
+select instructor_id, name from instructor where dept_id = (select dept_id from department where name = 'Computer Science');
+
+select instructor_id, name, salary from instructor where dept_id = (select dept_id from department where name = 'Computer Science'); // without join 
+select i.instructor_id, i.name, i.salary, d.name from instructor I join Department d on i.dept_id = d.dept_id where d.name = 'Computer Science'; 
+
+a. to find average salary in comp sci dept-
+select avg(i.salary) as avg_salary from instructor I join Department d on i.dept_id = d.dept_id where d.name = 'Computer Science'; 
+
+b. find avg salary in each dept-
+select d.name as dept_name, avg(i.salary) as avg_salary from department D join Instructor I on d.dept_id = i.dept_id group by d.name;
+
+c. total salary of all teachers earning more than 30k-
+select sum(salary) as total from instructor where salary > 30000;
+
+f. find name of all departments whose building name include the substring "sci" regardless of the case-
+select * from department where lower(name) like '%sci%';
+
+g. display length of the name of all all students-
+select length(name) as total_length from instructor;
+select sum(length(name)) as total_length from instructor group by name;
