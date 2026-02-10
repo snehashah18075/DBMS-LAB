@@ -1,0 +1,40 @@
+10.02.2026
+practical 3 remaining questions: 
+
+n. display names of all instructors concatenated with their department names:
+select i.name || ' - ' || d.name from instructor i join department d on i.dept_id=d.dept_id;
+
+o. retrieve distinct number of instructors from each department:
+select count(distinct Instructor_id) as inst_each_dept,d.name from instructor i join department d on i.dept_id = d.dept_id group by d.name;
+
+derived from command:
+select * from instructor i join on department d on i.dept=d.dept;
+
+select count(*) from instructor i join department d on i.dept_id=d.dept_id group by d.name;
+
+p. find the names of all instructors whose salary is greater than at least one instructor in the Biology department:
+select i.name, i.salary from instructor i join department d on i.dept_id=d.dept_id where i.salary > any (select salary from instructor where d.dept_id=4);
+
+-------------------
+practical 4 continued:
+
+2. display departments having dallas, new York, and Chicago location:
+select dept_name from departments where location = 'dallas' or location = 'new york' or location = 'Chicago';
+OR
+select dept_name from departments where lower(location) in ('dallas','new york','chicago');
+
+3. display the names of employees who are working as clerk, salesman, or analyst and drawing a salary of more than 3000
+select first_name, job, salary from emp1;
+select first_name, job, salary from emp1 where salary>=3000 and lower(job) in ('clerk','salesman','analyst');
+
+4. display the names of employees who are not working as manager.
+select first_name, last_name from emp1 where lower(job) != 'manager';
+
+5. display the name of the employee who earns the highest salary.
+select max(salary) from emp1;
+select first_name, salary from emp1 where salary = (select max(salary) from emp1));
+
+6. display he employee number and name of employee working as clerk and earning highest salary among clerks.
+select emp_no, first_name, salary, job from emp1 where salary = (select max(salary) from emp1 where lower(job) = 'clerk');  
+
+7. display the names of clerks who earn a salary more than that of bob and lesser than that of james.
