@@ -1,0 +1,134 @@
+
+23.02.26
+practical 6 - procedures (USED FOR REPITITIVE WORK)
+create user d2 identified by sit;
+grant coonect, resource to d2;
+connect procedure user y2024-28
+
+create or replace procedure helloworld
+AS 
+begin
+DBMS_OUTPUT.PUT_LINE('Hello World! Welcome to sit');
+end;
+/ 
+set serveroutput on
+exec helloworld
+
+create or replace procedure add
+AS
+a=5;
+b=10;
+begin 
+DBMS_OUTPUT.PUT_LINE('Result: ||:a + :b); 
+end;
+/
+
+this code will give error. define data types for a and b. add is a keyword.
+
+create or replace procedure addition
+AS
+a number;
+b number;
+begin
+a:=5;
+b:=10; 
+DBMS_OUTPUT.PUT_LINE('Result: '||(a + b)); 
+end;
+/
+
+to take input -
+
+create or replace procedure addition2
+(
+a in number,
+b in number)
+AS
+begin 
+DBMS_OUTPUT.PUT_LINE('Result: '||(a + b)); 
+end;
+/
+exec addition2(5,10)
+
+to pass variable c-
+create or replace procedure addition3
+(
+a in number,
+b in number)
+AS
+c number;
+begin 
+c:=a+b;
+DBMS_OUTPUT.PUT_LINE('Result: '||c); 
+end;
+/
+exec addition3(5,10)
+
+OR
+
+create or replace procedure addition3
+(
+a in number,
+b in number,
+c out number)
+AS
+begin 
+c:=a+b;
+DBMS_OUTPUT.PUT_LINE('Result: '||c); 
+end;
+/
+variable c1 number;
+exec addition3(5,10,:c1)
+
+PROCEDURE TO SWAP NUMBERS WITHOUT USING THIRD VARIABLE:
+
+CREATE OR REPLACE PROCEDURE SwapNumbers (
+  a IN OUT NUMBER,
+  b IN OUT NUMBER
+) AS
+BEGIN
+  a := a + b;
+  b := a - b;
+  a := a - b;
+END;
+/
+
+
+DECLARE
+  a NUMBER := 10;
+  b NUMBER := 20;
+BEGIN
+  SwapNumbers(a, b);
+  DBMS_OUTPUT.PUT_LINE('After Swap: a = ' || a || ', b = ' || b);
+END;
+/
+
+FIND THE LARGEST AMONG 3 NUMBERS:
+
+CREATE OR REPLACE PROCEDURE FindLargest (
+    num1 IN NUMBER,
+    num2 IN NUMBER,
+    num3 IN NUMBER,
+     largest OUT NUMBER
+) AS
+BEGIN
+    IF num1 >= num2 AND num1 >= num3 THEN
+         largest := num1;
+    ELSIF num2 >= num1 AND num2 >= num3 THEN
+        largest := num2;
+    ELSE
+         largest := num3;
+    END IF;
+ END;
+/
+
+
+DECLARE
+    x NUMBER := 15;
+    y NUMBER := 25;
+    z NUMBER := 10;
+    maxVal NUMBER;
+BEGIN
+    FindLargest(x, y, z, maxVal);
+    DBMS_OUTPUT.PUT_LINE('Largest Value: ' || maxVal);
+END;
+/
