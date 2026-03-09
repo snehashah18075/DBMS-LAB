@@ -1,0 +1,111 @@
+09.03.26
+practical 7: 
+FIND SUM OF NUMBERS FROM 1 to 10 USING WHILE LOOP
+create or replace procedure wl_1to10
+             AS 
+             i number := 1;
+             s number := 0;
+             begin
+                  while i <= 10 loop
+                  s := s + i;
+                  i := i + 1;
+             end loop;
+             DBMS_OUTPUT.PUT_LINE('Result of sum: '|| s);
+             end;
+             /
+set serveroutput on
+exec wl_1to10
+output: Result of sum: 55
+
+FIND SUM OF n NUMBERS USING WHILE LOOP
+create or replace procedure nsum (
+n in number)
+AS 
+s number := 0;
+i number := 1;
+begin 
+while i<=n loop
+s := s + i;
+i := i + 1;
+end loop;
+DBMS_OUTPUT.PUT_LINE('Result of sum of n numbers: '||s);
+end;
+/
+output: Result of sum of n numbers: 55
+
+USING FOR LOOP
+create or replace procedure nsum (
+n in number)
+AS 
+s number := 0;
+i number := 1;
+begin 
+for i in 1..n loop
+s := s + i;
+end loop;
+DBMS_OUTPUT.PUT_LINE('Result of sum of n numbers: '||s);
+end;
+/
+output: Result of sum of n numbers: 55
+
+USING FOR LOOP (DECREMENT)
+create or replace procedure nsum (
+n in number)
+AS 
+s number := 0;
+begin 
+for i in reverse 1..n loop
+s := s + i;
+end loop;
+DBMS_OUTPUT.PUT_LINE('Result of sum of n numbers: '||s);
+end;
+/
+output: Result of sum of n numbers: 55
+----------------------
+
+PRACTICAL 8:
+
+Conditional Statements
+
+create or replace procedure greatest_num(
+a in number,
+b in number,
+c in number)
+AS
+begin 
+if a > b and a > c then
+DBMS_OUTPUT.PUT_LINE('a is greatest');
+elsif b>a and b>c then
+DBMS_OUTPUT.PUT_LINE('b is greatest');
+else
+DBMS_OUTPUT.PUT_LINE('c is greatest');
+end if;
+end;
+/
+
+MARKS CASE 1:
+
+create or replace procedure marks
+AS
+OS number := 95;
+DBMS number := 89;
+M3 number := 98;
+s NUMBER;
+r number;
+begin 
+s := OS + DBMS + M3;
+r := (s/3) * 100;
+if r > 75 then 
+DBMS_OUTPUT.PUT_LINE('Distinction');
+elsif r>60 then 
+DBMS_OUTPUT.PUT_LINE('first division');
+elsif r>50 then 
+DBMS_OUTPUT.PUT_LINE('second division');
+else 
+DBMS_OUTPUT.PUT_LINE('fail');
+end if;
+end;
+/
+
+output: Distinction
+
