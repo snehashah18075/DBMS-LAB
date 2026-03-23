@@ -1,0 +1,42 @@
+23.03.26
+practical 10
+exception handling
+c/r procedure exp (var in datatype)
+AS 
+var1 exception
+var2 exception // these are user defined
+begin 
+code 
+when var1 exception 
+true state
+when var2 exception
+true state
+end excp
+end;
+
+program:
+create or replace procedure pr1(id in Number)
+AS
+name emp.empname %type;
+salary emp.salary %type;
+begin
+select empname, salary into Name, V_Salary from emp
+where emp_id = id;
+dbms_output.put_line('Name : '|| name); 
+dbms_output.put_line('Salary : '|| V_Salary);
+exception when no_data found then
+dbms.output.put_line('id not found');
+end pr1;
+/  
+
+practical 11:
+c/r procedure functionname(
+arg1 datatype
+arg2 datatype ) return datatype;
+as variable number = 0;
+begin
+	computation
+end func1;
+return var
+end;
+/
