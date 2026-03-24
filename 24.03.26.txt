@@ -1,0 +1,85 @@
+24.03.26
+types of exceptions - system and user defined 
+
+for table emp1 with fields emono, firstname, lastname, salary
+CREATE OR REPLACE PROCEDURE find_empid(n IN NUMBER)
+AS
+    vname   emp1.first_name%TYPE;
+    vsalary emp1.salary%TYPE;
+BEGIN
+    SELECT first_name, salary
+    INTO vname, vsalary
+    FROM emp1
+    WHERE emp_no = n;
+
+    DBMS_OUTPUT.PUT_LINE('Name = ' || vname);
+    DBMS_OUTPUT.PUT_LINE('Salary = ' || vsalary);
+
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('Emp id = ' || n || ' not found');
+END;
+/
+set serveroutput on
+exec find_empid(7876);
+
+
+
+CREATE OR REPLACE PROCEDURE find_deptid(n in NUMBER)
+AS
+    vname   emp1.first_name%TYPE;
+    vsalary emp1.salary%TYPE;
+BEGIN
+    SELECT first_name, salary
+    INTO vname, vsalary
+    FROM emp1
+    WHERE deptno = n;
+
+    DBMS_OUTPUT.PUT_LINE('Name = ' || vname);
+    DBMS_OUTPUT.PUT_LINE('Salary = ' || vsalary);
+
+EXCEPTION
+    WHEN TOO_MANY_ROWS THEN
+        DBMS_OUTPUT.PUT_LINE('Many employees found in dept='||n);
+END;
+/
+set serveroutput on
+exec find_deptid(10);
+
+user created exception:
+
+create or replace procedure uexcep(m1 in number, m2 in number, m3 in number)
+as
+invalid_marks exception;
+begin
+if m1<0 or m1>100 or m2<0 or m2>100 or m3<0 or m3>100
+then raise invalid_marks;
+elsif m1>=50 and m2>=50 and m3>=50 then
+dbms_output.put_line('Result: PASS');
+else
+dbms_output.put_line('Result: FAIL');
+end if;
+exception
+when invalid_marks then 
+dbms_output.put_line('Enter valid marks in range 0-100');
+end;
+/
+
+set serveroutput on
+exec uexecp(98,87,90);
+Result: PASS (output)
+
+Functions:
+
+create or replace function funcname(a in int, b in int)
+return number
+as
+c number;
+begin 
+c := a + b;
+return c;
+end;
+/
+
+select funcname(5,23) from dual;
+output - 28 in dual table
