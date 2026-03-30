@@ -1,0 +1,43 @@
+30.03.26
+
+triggers are of 2 types - system defined and user defined.
+statement level trigger and row level trigger
+statement level trigger example - 
+
+create or replace trigger tri_st
+before update on ST_INFO
+begin
+dbms_output.put_line('This is a statement level trigger fired');
+end;
+/
+set serveroutput on
+update ST_INFO set total = sub1+sub2+sub3+sub4;
+output - This is a statement level trigger fired
+         10 rows updated.
+
+row level trigger example- 
+create or replace trigger tri_row
+before update on ST_INFO
+begin
+dbms_output.put_line('This is a row level trigger fired');
+end;
+/
+set serveroutput on
+update ST_INFO set total = sub1+sub2+sub3+sub4 where sub1 > 80;
+output - This is a row level trigger fired
+This is a statement level trigger fired
+2 rows updated.
+
+syntax - create or repalce trig_name 
+         before || after for each
+         insert || update || delete on table_name
+         begin
+         code 
+         end;
+         /
+example for before insertion trigger:
+create or replace trigger tr_info
+before insert on ST_INFO
+begin 
+if (m1<0 or m1>100)
+
