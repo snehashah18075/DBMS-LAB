@@ -1,0 +1,87 @@
+31.03.26
+
+practical 14:
+
+create a table with fields empno as int, name as char, category as int. design a trigger for insertion or updation of a new record in capital records only. add another field salary as number to the table
+design a trigger for insertion or updation of the following - 
+if category is 1 then salary should be more than 10000
+if category is 2 then salary should be more than 20000
+if category is 3 then salary should be more than 30000
+
+
+create table emp2 (empno INT, name varchar(50), category INT);
+create or replace trigger emp_insert
+before insert on emp2 for each row
+begin 
+:NEW.name := UPPER(:NEW.name);
+END;
+/
+
+create or replace trigger emp_update
+before update on emp2 for each row
+begin
+:NEW.name := UPPER(:NEW.name);
+END;
+/
+
+alter table emp2 add salary number;
+
+CREATE OR REPLACE TRIGGER emp_salary
+BEFORE INSERT OR UPDATE ON emp2
+FOR EACH ROW
+BEGIN
+IF :NEW.category = 1 AND :NEW.salary <= 10000 THEN
+RAISE_APPLICATION_ERROR(-20001, 'Salary must be greater than 10000 for category 1');
+ELSIF :NEW.category = 2 AND :NEW.salary <= 20000 THEN
+RAISE_APPLICATION_ERROR(-20002, 'Salary must be greater than 20000 for category 2');
+ELSIF :NEW.category = 3 AND :NEW.salary <= 30000 THEN
+RAISE_APPLICATION_ERROR(-20003, 'Salary must be greater than 30000 for category 3');
+END IF;
+END;
+/
+
+with only trigger and no custom error
+CREATE OR REPLACE TRIGGER emp_salary
+BEFORE INSERT OR UPDATE ON emp2
+FOR EACH ROW
+BEGIN
+IF :NEW.category = 1 AND :NEW.salary <= 10000 THEN
+DBMS_OUTPUT.PUT_LINE('Warning: Salary should be greater than 10000 for category 1');
+ELSIF :NEW.category = 2 AND :NEW.salary <= 20000 THEN
+DBMS_OUTPUT.PUT_LINE('Warning: Salary should be greater than 20000 for category 2');
+ELSIF :NEW.category = 3 AND :NEW.salary <= 30000 THEN
+DBMS_OUTPUT.PUT_LINE('Warning: Salary should be greater than 30000 for category 3');
+END IF;
+END;
+/
+output: 
+SQL> set serveroutput on
+SQL> insert into emp2 values(1, 'sara',2,14980);
+insert into emp2 values(1, 'sara',2,14980)
+            *
+ERROR at line 1:
+ORA-20002: Salary must be greater than 20000 for category 2
+ORA-06512: at "D2.EMP_SALARY", line 5
+ORA-04088: error during execution of trigger 'D2.EMP_SALARY'
+---------------
+
+create or replace procedure to_mnth
+as 
+v_month:=upper(to_char(sysdate,'dy');
+dbms_output.put_line('the current day is ' || v_month);
+end;
+/
+
+design a trigger stop insertion or updation in the table for the day Tuesday of any date
+
+CREATE OR REPLACE TRIGGER no_ins_upd
+before insert or update on emp2 for each row
+declare 
+v_day varchar2(10);
+begin
+v_day := to_char(sysdate,'dy');
+if v_day ='tue' then
+raise_application_error(-20001,'cant insert or update on the table on '|| v_day);
+end if;
+end;
+/
