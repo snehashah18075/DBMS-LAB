@@ -1,0 +1,74 @@
+PRACTICAL 14:
+
+1]create a table emp2 with fields empno as int, name as character, category as int (take only 3 catagories i.e 1,2,& 3)
+
+CREATE TABLE emp2( empno INT PRIMARY KEY, name VARCHAR(50), category INT);
+
+2]design a trigger for insertion or updation a new record in capital letters onLy	
+
+CREATE OR REPLACE TRIGGER tri_emp2_row
+BEFORE INSERT OR UPDATE ON emp2 FOR EACH ROW
+BEGIN
+:NEW.name := UPPER(:NEW.name);
+END;
+/
+CREATE OR REPLACE TRIGGER emp_updates
+BEFORE UPDATE ON emp2 FOR EACH ROW
+BEGIN
+:NEW.name := UPPER(:NEW.name);
+END;
+/
+
+3]add another field salary as number to the table
+
+ALTER TABLE emp2 ADD salary NUMBER;
+
+4]design a trigger for insertion or updation for the following
+if category is 1 then salary should be more than 10000
+if category is 2 then salary should be more than 20000
+if category is 3 then salary should be more than 30000
+
+CREATE OR REPLACE TRIGGER tri_salary_check
+BEFORE INSERT OR UPDATE ON emp2 FOR EACH ROW
+BEGIN
+IF :NEW.category = 1 AND :NEW.salary <= 10000 THEN
+RAISE_APPLICATION_ERROR(-20002,'Salary must be > 10000 for category 1');
+ELSIF :NEW.category = 2 AND :NEW.salary <= 20000 THEN
+RAISE_APPLICATION_ERROR(-20003,'Salary must be > 20000 for category 2');
+ELSIF :NEW.category = 3 AND :NEW.salary <= 30000 THEN
+RAISE_APPLICATION_ERROR(-20004,'Salary must be > 30000 for category 3');
+END IF;
+END;
+/
+
+Trigger created.
+
+SQL> set serveroutput on;
+SQL> INSERT INTO emp2 VALUES (1, 'rahul', 1, 15000);
+
+1 row created.
+SQL> UPDATE emp2
+  2  SET salary = 5000
+  3  WHERE empno = 1;
+UPDATE emp2
+       *
+ERROR at line 1:
+
+Pratical 14 ends
+-----------------
+
+5]create or replace procedure to_mth
+as
+v_month varchar2(10);
+begin
+v_month:=upper(to_char(sysdate, 'day'));
+dbms_output.put_line('the current month is' || v_month);
+end;
+/
+
+Procedure created.
+
+SQL> exec to_mth;
+the current month isTUESDAY
+
+PL/SQL procedure successfully completed.
