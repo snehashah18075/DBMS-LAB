@@ -1,0 +1,30 @@
+create or replace procedure to_month
+as
+  v_month varchar2(10);
+begin
+  v_month := upper(to_char(sysdate,'month));
+  dbms_output.put_line('The current month is '|| v_month);
+  end;
+/
+
+create or replace procedure to_mnth
+as 
+  v_month varchar2(10);
+begin
+   v_month := upper(to_char(sysdate,'day'));
+   dbms_output.put_line('the current month is'|| v_month)
+end;
+/
+
+design a trigger to stop insertion or update in the table for the days like sat or sun of any date (for practice purpose take the day as 'tue')
+
+create or replace trigger no_ins_upd
+declare
+  v_day varchar2(10);
+begin
+    v_day := to_char(sysdate,'dy');
+    if v_day='tue' then 
+       raise_application_error(-20001,'cant insert or update on the table on'|| v_day);
+    end if;
+end;
+/
