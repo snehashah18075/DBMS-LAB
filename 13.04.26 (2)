@@ -1,0 +1,109 @@
+AUDIT
+Create table emp2_Aud AS select * from emp2 where 1=2;
+Table created.
+
+SQL> select * from emp2;
+
+     EMPNO
+----------
+NAME
+--------------------------------------------------------------------------------
+  CATEGORY     SALARY
+---------- ----------
+         3
+SNEHA
+
+
+         4
+RAHUL
+         1      50000
+
+     EMPNO
+----------
+NAME
+--------------------------------------------------------------------------------
+  CATEGORY     SALARY
+---------- ----------
+
+         5
+AMIT
+         2      45000
+
+         6
+SNEHA
+
+     EMPNO
+----------
+NAME
+--------------------------------------------------------------------------------
+  CATEGORY     SALARY
+---------- ----------
+         1      55000
+
+         7
+PRIYA
+         2      60000
+
+         8
+
+     EMPNO
+----------
+NAME
+--------------------------------------------------------------------------------
+  CATEGORY     SALARY
+---------- ----------
+VIKRAM
+         1      48000
+
+         1
+RAHUL
+         1      15000
+
+
+     EMPNO
+----------
+NAME
+--------------------------------------------------------------------------------
+  CATEGORY     SALARY
+---------- ----------
+         2
+AMIT
+         2      25000
+
+
+8 rows selected.
+
+SQL> select * from emp2_Aud;
+
+no rows selected
+
+SQL> desc emp2
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPNO                                     NOT NULL NUMBER(38)
+ NAME                                               VARCHAR2(100)
+ CATEGORY                                           NUMBER(38)
+ SALARY                                             NUMBER
+
+SQL> desc emp2_Aud;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPNO                                              NUMBER(38)
+ NAME                                               VARCHAR2(100)
+ CATEGORY                                           NUMBER(38)
+ SALARY                                             NUMBER
+
+To add new salary and modification date in audit table
+ALTER table emp2_aud add new_salary Number;
+ALTER table emp2_aud add mod_date Date;
+
+create or replace trigger emp2_aud_tri
+after update of salary on emp2
+for each row
+begin
+    insert into emp2_aud 
+        (empno, name, category, salary, new_salary, mod_date)
+    values 
+        (empno, name, category, :old.salary, :new.salary, sysdate);
+end;
+/
