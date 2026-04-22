@@ -1,0 +1,32 @@
+CREATE TABLE emp (
+    empno NUMBER,
+    ename VARCHAR2(50),
+    job   VARCHAR2(50)
+);
+CREATE TABLE audit_emp (
+    empno NUMBER,
+    ename VARCHAR2(50),
+    job   VARCHAR2(50),
+    action VARCHAR2(10),
+    username VARCHAR2(30)
+);
+CREATE OR REPLACE TRIGGER tr_upt_emp 
+AFTER INSERT OR DELETE OR UPDATE ON emp
+FOR EACH ROW
+BEGIN
+  IF INSERTING THEN
+    INSERT INTO AUDIT_EMP VALUES (:new.Empno, :new.ename, :new.job, 'INSERT', USER);
+  ELSIF DELETING THEN
+    INSERT INTO AUDIT_EMP VALUES (:old.Empno, :old.ename, :old.job, 'DELETE', USER);
+  ELSIF UPDATING THEN
+    INSERT INTO AUDIT_EMP VALUES (:old.Empno, :old.ename, :old.job, 'UPDATE', USER);
+  END IF;
+END;
+/
+INSERT INTO emp VALUES (1, 'Vedika', 'Engineer');
+UPDATE emp SET job = 'Manager' WHERE empno = 1;
+DELETE FROM emp WHERE empno = 1
+SELECT * FROM audit_emp;
+
+
+
