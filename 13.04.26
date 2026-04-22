@@ -1,0 +1,28 @@
+PRACTICAL 16
+
+create or replace procedure min_max_sal
+as
+  min_salary emp2.salary%type;
+  max_salary emp2.salary%type;
+begin 
+  select min(salary), max(salary) into min_salary, max_salary
+  from emp2;
+  min_salary := max_salary / 10;
+  max_salary := min_salary * 10;
+end;
+/
+
+create or replace trigger min_max_sal_tri
+before insert or update on emp2
+for each row 
+as 
+  min_salary emp2.salary%type;
+  max_salary emp2.salary%type;
+begin
+  select min(salary),max(salary) into min_salary, max_salary from emp2;
+  min_salary := max_saalry /10;
+  max_salary := min_salary%type;
+
+ :new.salary := max_salary;
+end;
+/
